@@ -10,7 +10,6 @@
             --bg-dark: #0a0a0a;
             --text-gray: #b0b0b0;
             --glitch-color: #00f2ff;
-            --card-bg: #0c0c0c;
         }
 
         body {
@@ -24,7 +23,6 @@
             line-height: 1.6;
         }
 
-        /* Glitch Animation */
         .glitch {
             font-size: 3.5rem;
             font-weight: bold;
@@ -55,147 +53,92 @@
             z-index: 1000;
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-img {
-            width: 45px;
-            filter: drop-shadow(0 0 10px var(--primary-color));
-        }
-
         .btn-join {
             background: linear-gradient(45deg, var(--primary-color), #8000ff);
             color: white;
             padding: 12px 30px;
-            border-radius: 0px; 
+            border: 1px solid white;
             text-decoration: none;
             font-weight: bold;
-            transition: 0.3s;
-            border: 1px solid white;
-            cursor: pointer;
             text-transform: uppercase;
+            transition: 0.3s;
         }
 
         .btn-join:hover {
-            transform: scale(1.05);
             box-shadow: 0 0 25px var(--primary-color);
             background: white;
             color: black;
         }
 
-        .hero {
-            text-align: center;
-            padding: 120px 20px;
-        }
+        .hero { text-align: center; padding: 100px 20px; }
 
-        .hero p {
-            color: var(--text-gray);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 25px auto;
-        }
-
-        /* Timer Box */
-        .timer-container {
-            margin: 50px 0;
-            background: #000;
-            padding: 30px;
-            display: inline-block;
-            border: 1px solid var(--primary-color);
-            position: relative;
-        }
-
-        .timer-container::before {
-            content: "SYSTEM STATUS: TRANSMITTING";
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            background: var(--primary-color);
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-        }
-
-        .timer {
-            font-size: 4.5rem;
-            color: var(--primary-color);
-            font-weight: bold;
-            letter-spacing: 5px;
-        }
-
-        /* Tokenomics Section */
+        /* THE MECHANICS SECTION */
         .section-title {
             text-align: center;
+            font-size: 2rem;
             letter-spacing: 5px;
             color: var(--primary-color);
-            margin-bottom: 40px;
-            text-transform: uppercase;
+            margin-top: 50px;
         }
 
-        .token-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 40px 20px;
-            background: #050505;
-        }
-
-        .token-card {
-            background: var(--card-bg);
-            padding: 30px;
-            width: 200px;
-            text-align: center;
-            border: 1px solid #222;
-            transition: 0.3s;
-        }
-
-        .token-card:hover {
-            border-color: var(--glitch-color);
-            background: #111;
-        }
-
-        .token-card h2 {
-            color: var(--glitch-color);
-            font-size: 2rem;
-            margin: 0;
-        }
-
-        .token-card p {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-            margin-top: 10px;
-            text-transform: uppercase;
-        }
-
-        .features {
+        .mechanics-container {
             display: flex;
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
-            padding: 80px 20px;
-            background: #000;
+            padding: 50px 20px;
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 40px;
-            width: 320px;
-            border-left: 4px solid var(--primary-color);
-            transition: 0.3s;
+        .mechanic-card {
+            background: #0c0c0c;
+            padding: 30px;
+            width: 350px;
+            border-top: 2px solid var(--primary-color);
+            position: relative;
         }
 
-        .card:hover { transform: translateY(-5px); }
+        .mechanic-card h3 { color: var(--glitch-color); margin-bottom: 15px; }
+        .mechanic-card span { font-size: 0.7rem; color: #555; position: absolute; top: 10px; right: 10px; }
 
-        .contract-section {
-            background: #000;
+        /* TOKENOMICS PIE CHART */
+        .tokenomics-box {
+            background: #050505;
             padding: 60px 20px;
-            text-align: center;
-            border-top: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            border-top: 1px solid #222;
         }
+
+        .pie-chart {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--primary-color) 0% 40%, 
+                var(--glitch-color) 40% 70%, 
+                #ffffff 70% 85%, 
+                #444 85% 95%,
+                #888 95% 100%
+            );
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.2);
+        }
+
+        .legend { list-style: none; padding: 0; }
+        .legend li { margin-bottom: 10px; font-size: 0.9rem; }
+        .legend span { display: inline-block; width: 12px; height: 12px; margin-right: 10px; }
+
+        .timer-container {
+            margin: 40px 0;
+            background: #000;
+            padding: 25px;
+            border: 1px solid var(--primary-color);
+            display: inline-block;
+        }
+
+        .timer { font-size: 4rem; color: var(--primary-color); font-weight: bold; }
 
         .address-box {
             background: #111;
@@ -207,95 +150,71 @@
             margin: 20px auto;
         }
 
-        footer {
-            padding: 40px;
-            text-align: center;
-            color: #444;
-            font-size: 0.8rem;
-            border-top: 1px solid #111;
-        }
-
-        @media (max-width: 768px) {
-            .timer { font-size: 2.5rem; }
-            .glitch { font-size: 2rem; }
-        }
+        footer { padding: 40px; text-align: center; color: #444; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-section">
-            <img src="static_logo.png" alt="STATIC LOGO" class="logo-img">
-            <span style="font-size: 1.4rem; font-weight: bold; letter-spacing: 4px;">$STATIC</span>
-        </div>
-        <a href="#" class="btn-join">Join Presale</a>
+        <div style="font-weight: bold; letter-spacing: 4px;">$STATIC</div>
+        <a href="#" class="btn-join">JOIN PRESALE</a>
     </header>
 
     <section class="hero">
-        <div class="glitch">SIGNAL DECAY</div>
-        <p>
-            The signal is fading. Inactivity is punished. <br>
-            A social experiment on Solana where silence costs 25%. <br>
-            <strong>The 84-Hour Rule is now active.</strong>
-        </p>
-
+        <div class="glitch">STATIC PROTOCOL</div>
         <div class="timer-container">
-            <div style="font-size: 0.8rem; color: #555; margin-bottom: 10px; text-transform: uppercase;">Presale Frequency Lock In:</div>
-            <div class="timer" id="countdown">84:00:00</div>
+            <div style="font-size: 0.7rem; color: #555; margin-bottom: 5px;">TIME UNTIL DECAY LOCK:</div>
+            <div class="timer" id="countdown">83:59:16</div>
         </div>
     </section>
 
-    <h2 class="section-title">Token Distribution</h2>
-    <section class="token-grid">
-        <div class="token-card">
-            <h2>40%</h2>
-            <p>Public Presale</p>
+    <h2 class="section-title">THE MECHANICS</h2>
+    <section class="mechanics-container">
+        <div class="mechanic-card">
+            <span>[PROC_01]</span>
+            <h3>The 84H Velocity</h3>
+            <p>The protocol monitors wallet activity. If no "Buy" or "Transfer" signal is detected within 84 hours, the wallet is flagged as 'Inactive'.</p>
         </div>
-        <div class="token-card">
-            <h2>30%</h2>
-            <p>Liquidity (Locked)</p>
+        <div class="mechanic-card">
+            <span>[PROC_02]</span>
+            <h3>Signal Decay Tax</h3>
+            <p>Inactive wallets trigger an automated 25% Decay Tax on sell orders. This tax is hardcoded into the Token-2022 smart contract.</p>
         </div>
-        <div class="token-card">
-            <h2>15%</h2>
-            <p>Marketing</p>
-        </div>
-        <div class="token-card">
-            <h2>10%</h2>
-            <p>Development</p>
-        </div>
-        <div class="token-card">
-            <h2>5%</h2>
-            <p>Airdrops</p>
+        <div class="mechanic-card">
+            <span>[PROC_03]</span>
+            <h3>Frequency Recovery</h3>
+            <p>Performing a single transaction resets the 84-hour clock, restoring the wallet to the standard ecosystem tax rate.</p>
         </div>
     </section>
 
-    <section class="features">
-        <div class="card">
-            <h3>84H DECAY</h3>
-            <p>If a wallet stops transmitting for more than 84 hours, the sell tax spikes to 25% automatically. Stay active.</p>
-        </div>
-        <div class="card">
-            <h3>TOKEN-2022</h3>
-            <p>Built using Solana's advanced Token-2022 standard. Hardcoded tax logic and irreversible transparency.</p>
-        </div>
-        <div class="card">
-            <h3>LOCKED POOL</h3>
-            <p>100% of liquidity will be locked and keys burned. No rugs. No exits. Just the static remains.</p>
+    <h2 class="section-title">TOKENOMICS</h2>
+    <section class="tokenomics-box">
+        <div class="pie-chart"></div>
+        <div>
+            <ul class="legend">
+                <li><span style="background: var(--primary-color);"></span> 40% Public Presale</li>
+                <li><span style="background: var(--glitch-color);"></span> 30% Burned Liquidity</li>
+                <li><span style="background: #ffffff;"></span> 15% Marketing Wave</li>
+                <li><span style="background: #444;"></span> 10% Core Vested</li>
+                <li><span style="background: #888;"></span> 05% Community Drops</li>
+            </ul>
+            <div style="margin-top: 20px; color: var(--text-gray); font-size: 0.8rem;">
+                TOTAL SUPPLY: 1,000,000,000 $STATIC
+            </div>
         </div>
     </section>
 
-    <section class="contract-section">
+    <section style="text-align: center; padding: 60px 20px; border-top: 1px solid #222;">
         <h3 style="letter-spacing: 3px;">MINT ADDRESS (CA)</h3>
         <div class="address-box">Euh9N7CEwhNAcHk6oYakunYqGH2cZaKUbmmFbg5yrt8M</div>
-        <p style="font-size: 0.8rem; color: #555;">Verify the signal before interacting.</p>
     </section>
 
     <footer>
-        &copy; 2026 STATICCOIN | SOLANA MAINNET DEPLOYMENT | [NULL_SIGNAL]
+        &copy; 2026 STATICCOIN | [SIGNAL_DECAY_PROTOCOL]
     </footer>
 
     <script>
-        let totalSeconds = 84 * 3600; 
+        let totalSeconds = 83 * 3600 + 59 * 60 + 16;
         function updateTimer() {
             if (totalSeconds > 0) {
                 totalSeconds--;
@@ -303,9 +222,7 @@
                 let m = Math.floor((totalSeconds % 3600) / 60);
                 let s = totalSeconds % 60;
                 document.getElementById('countdown').innerText = 
-                    String(h).padStart(2, '0') + ":" + 
-                    String(m).padStart(2, '0') + ":" + 
-                    String(s).padStart(2, '0');
+                    String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
             }
         }
         setInterval(updateTimer, 1000);
