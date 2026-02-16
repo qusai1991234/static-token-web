@@ -3,260 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STATIC | SIGNAL_DECAY_PROTOCOL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Static Protocol | Decentralized Finance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --red: #ff003c;
-            --blue: #00f2ff;
-            --green: #00ff41;
-            --bg: #050505;
+            --primary-blue: #3b82f6;
+            --accent-red: #ef4444;
+            --bg-dark: #111827;
+            --card-bg: #1f2937;
+            --text-main: #f3f4f6;
+            --text-dim: #9ca3af;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
-            color: #fff;
-            font-family: 'Fira Code', monospace;
-            overflow-x: hidden;
-            line-height: 1.4;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
         }
 
-        /* TV Static Background Effect */
-        .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/b/b1/TV_static.gif');
-            opacity: 0.04; pointer-events: none; z-index: 9999;
-        }
-
-        /* CRT Scanline Effect */
-        .crt-filter {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-            z-index: 10000; pointer-events: none; background-size: 100% 3px, 3px 100%;
-        }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10; }
-
+        /* Header */
         header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--red); padding-bottom: 20px; margin-bottom: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .glitch-logo {
-            font-size: 2rem; font-weight: bold; letter-spacing: 8px;
-            color: white; text-shadow: 2px 0 var(--blue), -2px 0 var(--red);
-            animation: glitch 1.5s infinite;
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-blue); letter-spacing: -1px; }
+
+        nav a { color: var(--text-dim); text-decoration: none; margin-left: 30px; font-size: 0.9rem; transition: 0.3s; }
+        nav a:hover { color: var(--primary-blue); }
+
+        .btn-presale {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .btn-presale:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 80px 20px; max-width: 900px; margin: 0 auto; }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; background: linear-gradient(to right, #fff, var(--primary-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--text-dim); font-size: 1.1rem; margin-bottom: 40px; }
+
+        /* Timer Box */
+        .timer-card {
+            background: var(--card-bg);
+            border: 1px solid #374151;
+            padding: 30px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .timer-label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .timer-display { font-size: 4rem; font-weight: 700; color: var(--accent-red); font-variant-numeric: tabular-nums; }
+
+        .decay-notice { color: var(--accent-red); font-weight: 500; font-size: 0.9rem; }
+
+        /* Info Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 60px 8%;
         }
 
-        @keyframes glitch {
-            0% { transform: skew(0deg); }
-            20% { transform: skew(2deg); text-shadow: -2px 0 var(--red); }
-            40% { transform: skew(-2deg); text-shadow: 2px 0 var(--blue); }
-            100% { transform: skew(0deg); }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #374151;
+            padding: 30px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+        .card:hover { border-color: var(--primary-blue); }
+        .card h3 { margin-bottom: 20px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+
+        /* Circular Chart Simulation */
+        .chart-sim {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            border: 15px solid #374151;
+            border-top: 15px solid var(--primary-blue);
+            margin: 0 auto 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.5rem;
         }
 
-        .hero { text-align: center; margin-bottom: 80px; }
-        
-        /* 84H Timer Box */
-        .timer-frame {
-            border: 1px solid var(--red); padding: 30px; display: inline-block;
-            background: rgba(255, 0, 60, 0.05); position: relative;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        /* Tokenomics List */
+        .token-list { list-style: none; }
+        .token-list li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #374151; font-size: 0.9rem; }
+        .token-list li span:last-child { font-weight: 600; color: var(--primary-blue); }
+
+        /* CA Box */
+        .ca-box {
+            background: #111827;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--primary-blue);
+            word-break: break-all;
+            margin-top: 15px;
+            border: 1px dashed #374151;
         }
 
-        .timer-val { font-size: 5rem; font-weight: bold; color: var(--red); text-shadow: 0 0 20px var(--red); }
+        /* Roadmap */
+        .roadmap-item { margin-bottom: 20px; position: relative; padding-left: 25px; }
+        .roadmap-item::before { content: ''; position: absolute; left: 0; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary-blue); }
+        .roadmap-item span { display: block; font-size: 0.75rem; color: var(--text-dim); }
 
-        /* Main Grid */
-        .system-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        footer { text-align: center; padding: 40px; color: var(--text-dim); font-size: 0.8rem; border-top: 1px solid #374151; }
 
-        .terminal-panel {
-            background: rgba(10, 10, 10, 0.8); border: 1px solid #222; padding: 30px;
-            position: relative; transition: 0.3s;
-        }
-        .terminal-panel:hover { border-color: var(--blue); box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); }
-        .panel-label { color: var(--blue); font-size: 0.7rem; margin-bottom: 15px; display: block; }
-
-        /* Distribution Radar */
-        .radar-ui { position: relative; width: 220px; height: 220px; margin: 0 auto 20px; }
-        .radar-svg { transform: rotate(-90deg); border-radius: 50%; }
-        .ring { fill: none; stroke-width: 25; transition: 0.5s; }
-        .p-pre { stroke: var(--red); stroke-dasharray: 40 100; stroke-dashoffset: 0; filter: drop-shadow(0 0 5px var(--red)); }
-        .p-liq { stroke: var(--blue); stroke-dasharray: 30 100; stroke-dashoffset: -40; }
-        .p-mkt { stroke: #ffffff; stroke-dasharray: 15 100; stroke-dashoffset: -70; }
-        .p-tm  { stroke: #444444; stroke-dasharray: 10 100; stroke-dashoffset: -85; }
-        .p-air { stroke: #888888; stroke-dasharray: 5 100; stroke-dashoffset: -95; }
-
-        /* Roadmap Styling */
-        .roadmap-list { list-style: none; margin-top: 20px; }
-        .protocol-item {
-            margin-bottom: 25px; padding-left: 15px; border-left: 1px solid #333;
-            position: relative;
-        }
-        .protocol-item h4 { font-size: 0.9rem; color: var(--blue); margin-bottom: 5px; }
-        .protocol-item ul { font-size: 0.75rem; color: #888; list-style: none; }
-        .status-tag { 
-            position: absolute; top: 0; right: 0; font-size: 0.6rem; 
-            padding: 2px 6px; border: 1px solid var(--green); color: var(--green);
-        }
-
-        .ca-display {
-            background: #000; padding: 15px; border: 1px dashed var(--red);
-            font-size: 0.8rem; color: var(--blue); margin-top: 20px; word-break: break-all;
-        }
-
-        .btn-connect {
-            background: var(--red); color: black; border: none; padding: 15px 40px;
-            font-family: inherit; font-weight: bold; width: 100%; margin-top: 20px;
-            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
-        }
-        .btn-connect:hover { background: white; box-shadow: 0 0 30px white; }
-
-        footer { text-align: center; margin-top: 100px; padding: 40px; opacity: 0.2; font-size: 0.7rem; }
-
-        @media (max-width: 600px) {
-            .timer-val { font-size: 2.5rem; }
-            .glitch-logo { font-size: 1.2rem; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .timer-display { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="noise-overlay"></div>
-    <div class="crt-filter"></div>
+    <header>
+        <div class="logo">$STATIC PROTOCOL</div>
+        <nav>
+            <a href="#tokenomics">Tokenomics</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#" class="btn-presale">Join Presale</a>
+        </nav>
+    </header>
 
-    <div class="container">
-        <header>
-            <div class="glitch-logo">STATIC_SIGNAL_v1.0</div>
-            <div style="font-size: 0.7rem; color: var(--green);">[SYSTEM_ONLINE]</div>
-        </header>
+    <section class="hero">
+        <h1>Decentralized Finance Protocol</h1>
+        <p>A smart mechanism designed to ensure continuous community engagement and liquidity stability through the 84-hour velocity rule.</p>
+        
+        <div class="timer-card">
+            <span class="timer-label">Next Decay Trigger In:</span>
+            <div class="timer-display" id="main-timer">84:00:00</div>
+        </div>
+        <p class="decay-notice">Inactivity of 84 hours will result in a 25% tax adjustment.</p>
+    </section>
 
-        <section class="hero">
-            <h1 style="letter-spacing: 15px; margin-bottom: 10px;">$STATIC</h1>
-            <p style="color: var(--blue); font-size: 1.1rem; margin-bottom: 40px;">// DECAY_PROTOCOL_84H_ACTIVE //</p>
-            
-            <div class="timer-frame">
-                <span style="font-size: 0.7rem; color: var(--red);">TIME_UNTIL_DECAY_LOCK:</span><br>
-                <div class="timer-val" id="countdown">84:00:00</div>
-            </div>
-            
-            <p style="max-width: 700px; margin: 40px auto; color: #777;">
-                > 84 hours of inactivity triggers a 25% signal decay tax. <br>
-                > Maintain the frequency. Keep the signal alive.
-            </p>
-        </section>
+    <div class="grid-container" id="tokenomics">
+        <div class="card">
+            <h3>Allocation</h3>
+            <div class="chart-sim">40%</div>
+            <ul class="token-list">
+                <li><span>Presale</span> <span>40%</span></li>
+                <li><span>Liquidity Pool</span> <span>30%</span></li>
+                <li><span>Marketing</span> <span>15%</span></li>
+                <li><span>Team (Locked)</span> <span>10%</span></li>
+            </ul>
+        </div>
 
-        <div class="system-grid">
-            <div class="terminal-panel">
-                <span class="panel-label">> SIGNAL_DISTRIBUTION_MAP</span>
-                <div class="radar-ui">
-                    <svg viewBox="0 0 42 42" class="radar-svg">
-                        <circle class="ring p-pre" cx="21" cy="21" r="15.9"></circle>
-                        <circle class="ring p-liq" cx="21" cy="21" r="15.9"></circle>
-                        <circle class="ring p-mkt" cx="21" cy="21" r="15.9"></circle>
-                        <circle class="ring p-tm"  cx="21" cy="21" r="15.9"></circle>
-                        <circle class="ring p-air" cx="21" cy="21" r="15.9"></circle>
-                    </svg>
-                    <div style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align: center;">
-                        <span style="font-size: 1.5rem; font-weight: bold;">1.0B</span><br><span style="font-size: 0.5rem; color: #555;">SUPPLY</span>
-                    </div>
-                </div>
-                <ul style="list-style: none; font-size: 0.8rem; color: #bbb;">
-                    <li><span style="color: var(--red);">■</span> 40% Public Presale</li>
-                    <li><span style="color: var(--blue);">■</span> 30% Burned Liquidity</li>
-                    <li><span style="color: #fff;">■</span> 15% Marketing Wave</li>
-                    <li><span style="color: #444;">■</span> 10% Core Vested</li>
-                    <li><span style="color: #888;">■</span> 05% Community Drops</li>
-                </ul>
-            </div>
-
-            <div class="terminal-panel">
-                <span class="panel-label">> SYSTEM_ROADMAP_LOGS</span>
-                <div class="roadmap-list">
-                    <div class="protocol-item">
-                        <div class="status-tag">ACTIVE</div>
-                        <h4>PROTOCOL_01: GENESIS</h4>
-                        <ul>
-                            <li>- Contract Deployment [DONE]</li>
-                            <li>- 84H Tax Logic Setup [DONE]</li>
-                            <li>- Global Signal Ignition [PENDING]</li>
-                        </ul>
-                    </div>
-                    <div class="protocol-item">
-                        <div class="status-tag" style="color: #444; border-color: #222;">LOCKED</div>
-                        <h4>PROTOCOL_02: AMPLIFY</h4>
-                        <ul>
-                            <li>- Pinksale Transmission [LOCKED]</li>
-                            <li>- Liquidity Frequency Burn</li>
-                            <li>- DEXScreener Relay Data</li>
-                        </ul>
-                    </div>
-                    <div class="protocol-item">
-                        <div class="status-tag" style="color: #444; border-color: #222;">LOCKED</div>
-                        <h4>PROTOCOL_03: IMMUNITY</h4>
-                        <ul>
-                            <li>- CEX Signal Bridging</li>
-                            <li>- Global Noise Expansion</li>
-                            <li>- Final Silence Burn</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="terminal-panel" style="border-color: var(--red);">
-                <span class="panel-label" style="color: var(--red);">> ACCESS_ENCRYPTION_KEY</span>
-                <p style="font-size: 0.8rem; color: #555;">Verify CA before transmission:</p>
-                <div class="ca-display">
-                    Euh9N7CEwhNAcHk6oYakunYqGH2cZaKUbmmFbg5yrt8M
-                </div>
-                
-                <p style="font-size: 0.8rem; margin-top: 25px; color: #555;">> SECURITY: TOKEN-2022<br>> NETWORK: SOLANA MAINNET</p>
-                
-                <button class="btn-connect">CONNECT_TO_PRESALE</button>
+        <div class="card">
+            <h3>Protocol Logic</h3>
+            <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 15px;">The protocol uses Token-2022 standard on Solana to implement native tax decaying mechanics.</p>
+            <ul class="token-list">
+                <li><span>Network</span> <span>Solana</span></li>
+                <li><span>Standard</span> <span>Token-2022</span></li>
+                <li><span>Total Supply</span> <span>1,000,000,000</span></li>
+            </ul>
+            <div class="ca-box">
+                CA: Euh9N7CEwhNAcHk6oYakunYqGH2cZaKUbmmFbg5yrt8M
             </div>
         </div>
 
-        <footer>
-            NO RECOVERY KEY DETECTED. STATIC REMAINS FOREVER. <br>
-            TIMESTAMP: 2026.02.17_00:00:00_UTC
-        </footer>
+        <div class="card" id="roadmap">
+            <h3>Roadmap</h3>
+            <div class="roadmap-item">
+                <span>Phase 01</span>
+                <strong>Protocol Genesis</strong>
+            </div>
+            <div class="roadmap-item">
+                <span>Phase 02</span>
+                <strong>Community Fairlaunch</strong>
+            </div>
+            <div class="roadmap-item" style="opacity: 0.5;">
+                <span>Phase 03</span>
+                <strong>Tier 1 Exchange Listing</strong>
+            </div>
+        </div>
     </div>
 
-    <script>
-        // Professional Decay Timer
-        let totalSeconds = 84 * 3600;
-        const display = document.getElementById('countdown');
+    <footer>
+        &copy; 2026 Static Protocol. All rights reserved. Built on Solana.
+    </footer>
 
+    <script>
+        // Professional Timer Logic
+        let timeLeft = 84 * 3600;
         function updateTimer() {
-            if (totalSeconds > 0) {
-                totalSeconds--;
-                let h = Math.floor(totalSeconds / 3600);
-                let m = Math.floor((totalSeconds % 3600) / 60);
-                let s = totalSeconds % 60;
-                display.innerText = 
-                    String(h).padStart(2, '0') + ":" + 
-                    String(m).padStart(2, '0') + ":" + 
-                    String(s).padStart(2, '0');
-            }
-            
-            // Random glitch visual effect on timer
-            if (Math.random() > 0.99) {
-                display.style.opacity = "0.2";
-                setTimeout(() => display.style.opacity = "1", 50);
-            }
+            const h = Math.floor(timeLeft / 3600);
+            const m = Math.floor((timeLeft % 3600) / 60);
+            const s = timeLeft % 60;
+            document.getElementById('main-timer').textContent = 
+                `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            if (timeLeft > 0) timeLeft--;
         }
         setInterval(updateTimer, 1000);
-
-        // Body vibration on mouse movement (Experimental)
-        document.addEventListener('mousemove', (e) => {
-            if (Math.random() > 0.97) {
-                document.body.style.transform = `translate(${Math.random() * 2}px, ${Math.random() * 2}px)`;
-            } else {
-                document.body.style.transform = `none`;
-            }
-        });
+        updateTimer();
     </script>
 </body>
 </html>
