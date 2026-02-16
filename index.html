@@ -14,7 +14,7 @@
         body {
             background-color: var(--bg);
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* خط أوضح وأسهل */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             line-height: 1.6;
             background-image: linear-gradient(rgba(255, 0, 85, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 0, 85, 0.05) 1px, transparent 1px);
@@ -31,6 +31,36 @@
             position: sticky; top: 0; z-index: 100;
         }
 
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .coin-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--primary);
+            filter: drop-shadow(0 0 5px var(--primary));
+        }
+
+        .hero-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid var(--primary);
+            filter: drop-shadow(0 0 15px var(--primary));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 15px var(--primary)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px var(--primary)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 15px var(--primary)); }
+        }
+
         .btn-buy {
             background: var(--primary);
             color: white;
@@ -41,7 +71,7 @@
             box-shadow: 0 0 15px var(--primary);
         }
 
-        .hero { text-align: center; padding: 80px 20px; }
+        .hero { text-align: center; padding: 60px 20px; }
         
         .main-title {
             font-size: 4rem;
@@ -70,12 +100,11 @@
             border: 3px solid white;
             display: inline-block;
             margin: 30px 0;
-            transform: rotate(-2deg); /* حركة ميم صايعة */
+            transform: rotate(-2deg);
         }
 
         .timer { font-size: 3.5rem; font-weight: bold; color: var(--primary); }
 
-        /* THE RULES SECTION (Simple & Fun) */
         .section-padding { padding: 60px 10%; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         
@@ -89,7 +118,6 @@
         .rule-card:hover { border-color: var(--primary); transform: scale(1.02); }
         .rule-card h3 { color: var(--primary); font-size: 1.5rem; margin-top: 0; }
 
-        /* CHART SECTION - UPDATED FOR NEW PERCENTAGES */
         .chart-container {
             display: flex;
             align-items: center;
@@ -104,21 +132,12 @@
         .circle-chart {
             width: 200px; height: 200px;
             border-radius: 50%;
-            /* Logic: 40% Primary, 30% Glitch, 15% White, 10% Grey, 5% Darker Grey */
-            background: conic-gradient(
-                var(--primary) 0% 40%, 
-                var(--glitch) 40% 70%, 
-                white 70% 85%, 
-                #444 85% 95%,
-                #222 95% 100%
-            );
+            background: conic-gradient(var(--primary) 0% 40%, var(--glitch) 40% 70%, white 70% 85%, #444 85% 95%, #222 95% 100%);
         }
 
         .legend-list { list-style: none; padding: 0; }
         .legend-list li { margin: 10px 0; font-weight: bold; display: flex; align-items: center; gap: 10px; }
-        .legend-list li span { font-size: 1.2rem; line-height: 1; }
 
-        /* ROADMAP - MEME STYLE */
         .roadmap-box {
             border-left: 4px dashed var(--primary);
             margin: 40px auto;
@@ -136,16 +155,26 @@
         }
 
         footer { text-align: center; padding: 50px; opacity: 0.5; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.5rem; }
+            .timer { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div style="font-size: 1.5rem; font-weight: 900;">$STATIC</div>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/8k9t0FJZ/Gemini-Generated-Image-8fmwg48fmwg48fmw.png" alt="STATIC LOGO" class="coin-logo">
+            <span style="font-size: 1.5rem; font-weight: 900;">$STATIC</span>
+        </div>
         <a href="#" class="btn-buy">BUY ON PINKSALE</a>
     </header>
 
     <section class="hero">
+        <img src="https://i.postimg.cc/8k9t0FJZ/Gemini-Generated-Image-8fmwg48fmwg48fmw.png" alt="STATIC MAIN" class="hero-logo">
+        
         <div class="status-bar">● STATUS: TRANSMITTING THE MEME</div>
         <h1 class="main-title">84 HOURS OR DIE</h1>
         <p style="font-size: 1.2rem; color: #888;">The first social experiment on Solana where silence is expensive.</p>
@@ -175,7 +204,7 @@
     </section>
 
     <section class="section-padding" style="background: #080808;">
-        <h2 style="text-align: center; margin-bottom: 40px;">TOKENOMICS</h2>
+        <h2 style="text-align: center; margin-bottom: 40px; color: var(--primary);">TOKENOMICS</h2>
         <div class="chart-container">
             <div class="circle-chart"></div>
             <ul class="legend-list">
