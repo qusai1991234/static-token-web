@@ -50,6 +50,7 @@
             background: var(--primary); color: white; padding: 10px 25px;
             font-weight: bold; text-decoration: none; border-radius: 5px;
             box-shadow: 0 0 15px var(--primary);
+            text-transform: uppercase;
         }
 
         .hero { text-align: center; padding: 60px 20px; }
@@ -79,6 +80,7 @@
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .rule-card { background: #111; padding: 30px; border-radius: 15px; border: 1px solid #222; }
+        .rule-card h3 { color: var(--primary); margin-top: 0; }
 
         .chart-container {
             display: flex; align-items: center; justify-content: center; gap: 40px;
@@ -101,6 +103,11 @@
         }
 
         footer { text-align: center; padding: 50px; opacity: 0.5; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.5rem; }
+            .timer { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -110,7 +117,7 @@
             <img src="https://i.postimg.cc/8k9t0FJZ/Gemini-Generated-Image-8fmwg48fmwg48fmw.png" alt="STATIC LOGO" class="coin-logo">
             <span style="font-size: 1.5rem; font-weight: 900;">$STATIC</span>
         </div>
-        <a href="#" class="btn-buy">BUY ON PINKSALE</a>
+        <a href="#" class="btn-buy">Join Presale</a>
     </header>
 
     <section class="hero">
@@ -133,7 +140,7 @@
                 <thead>
                     <tr>
                         <th>The Situation</th>
-                        <th>Other Meme Coins</th>
+                        <th>Standard Meme Coins</th>
                         <th style="color: var(--primary);">$STATIC</th>
                     </tr>
                 </thead>
@@ -144,9 +151,9 @@
                         <td>Stay Loud, Stay Alive 📢</td>
                     </tr>
                     <tr>
-                        <td>Holders Experience</td>
-                        <td>تشتري، تنام، تستيقظ لتجد السعر هبط 📉</td>
-                        <td>تشتري، تبقى نشطاً، والبروتوكول يحميك 🔥</td>
+                        <td>Holder Experience</td>
+                        <td>Buy, Sleep, Wake up to a 90% dip 📉</td>
+                        <td>Buy, Stay Active, Protocol protects you 🔥</td>
                     </tr>
                     <tr>
                         <td>Paper Hands Tax</td>
@@ -168,15 +175,15 @@
         <div class="grid">
             <div class="rule-card">
                 <h3>1. Buy $STATIC</h3>
-                <p>Join the signal. Holders are safe as long as they stay loud.</p>
+                <p>Join the frequency. Holders are safe as long as they stay connected.</p>
             </div>
             <div class="rule-card">
                 <h3>2. Stay Active</h3>
-                <p>Don't disappear for more than 84 hours. One tiny move keeps you in the game.</p>
+                <p>Don't go silent for more than 84 hours. One tiny move keeps your signal strong.</p>
             </div>
             <div class="rule-card">
                 <h3>3. The Penalty</h3>
-                <p>Inactive wallets get hit with a 25% tax. We burn the weak signals to fuel the moon!</p>
+                <p>Inactive wallets trigger a 25% Decay Tax. We burn the silence to fuel the moon!</p>
             </div>
         </div>
     </section>
@@ -201,7 +208,7 @@
             <span id="ca-text">Euh9N7CEwhNAcHk6oYakunYqGH2cZaKUbmmFbg5yrt8M</span>
             <button class="copy-btn" onclick="copyCA()">COPY</button>
         </div>
-        <p id="copy-status" style="color: var(--glitch); font-size: 0.8rem;"></p>
+        <p id="copy-status" style="color: var(--glitch); font-size: 0.8rem; height: 20px;"></p>
     </section>
 
     <footer>
