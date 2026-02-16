@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STATIC | SIGNAL_DECAY_PROTOCOL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #ff003c;
+            --blue: #00f2ff;
+            --green: #00ff41;
+            --bg: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        /* TV Static Background Effect */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/b/b1/TV_static.gif');
+            opacity: 0.04; pointer-events: none; z-index: 9999;
+        }
+
+        /* CRT Scanline Effect */
+        .crt-filter {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            z-index: 10000; pointer-events: none; background-size: 100% 3px, 3px 100%;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10; }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--red); padding-bottom: 20px; margin-bottom: 50px;
+        }
+
+        .glitch-logo {
+            font-size: 2rem; font-weight: bold; letter-spacing: 8px;
+            color: white; text-shadow: 2px 0 var(--blue), -2px 0 var(--red);
+            animation: glitch 1.5s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(2deg); text-shadow: -2px 0 var(--red); }
+            40% { transform: skew(-2deg); text-shadow: 2px 0 var(--blue); }
+            100% { transform: skew(0deg); }
+        }
+
+        .hero { text-align: center; margin-bottom: 80px; }
+        
+        /* 84H Timer Box */
+        .timer-frame {
+            border: 1px solid var(--red); padding: 30px; display: inline-block;
+            background: rgba(255, 0, 60, 0.05); position: relative;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        }
+
+        .timer-val { font-size: 5rem; font-weight: bold; color: var(--red); text-shadow: 0 0 20px var(--red); }
+
+        /* Main Grid */
+        .system-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+
+        .terminal-panel {
+            background: rgba(10, 10, 10, 0.8); border: 1px solid #222; padding: 30px;
+            position: relative; transition: 0.3s;
+        }
+        .terminal-panel:hover { border-color: var(--blue); box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); }
+        .panel-label { color: var(--blue); font-size: 0.7rem; margin-bottom: 15px; display: block; }
+
+        /* Distribution Radar */
+        .radar-ui { position: relative; width: 220px; height: 220px; margin: 0 auto 20px; }
+        .radar-svg { transform: rotate(-90deg); border-radius: 50%; }
+        .ring { fill: none; stroke-width: 25; transition: 0.5s; }
+        .p-pre { stroke: var(--red); stroke-dasharray: 40 100; stroke-dashoffset: 0; filter: drop-shadow(0 0 5px var(--red)); }
+        .p-liq { stroke: var(--blue); stroke-dasharray: 30 100; stroke-dashoffset: -40; }
+        .p-mkt { stroke: #ffffff; stroke-dasharray: 15 100; stroke-dashoffset: -70; }
+        .p-tm  { stroke: #444444; stroke-dasharray: 10 100; stroke-dashoffset: -85; }
+        .p-air { stroke: #888888; stroke-dasharray: 5 100; stroke-dashoffset: -95; }
+
+        /* Roadmap Styling */
+        .roadmap-list { list-style: none; margin-top: 20px; }
+        .protocol-item {
+            margin-bottom: 25px; padding-left: 15px; border-left: 1px solid #333;
+            position: relative;
+        }
+        .protocol-item h4 { font-size: 0.9rem; color: var(--blue); margin-bottom: 5px; }
+        .protocol-item ul { font-size: 0.75rem; color: #888; list-style: none; }
+        .status-tag { 
+            position: absolute; top: 0; right: 0; font-size: 0.6rem; 
+            padding: 2px 6px; border: 1px solid var(--green); color: var(--green);
+        }
+
+        .ca-display {
+            background: #000; padding: 15px; border: 1px dashed var(--red);
+            font-size: 0.8rem; color: var(--blue); margin-top: 20px; word-break: break-all;
+        }
+
+        .btn-connect {
+            background: var(--red); color: black; border: none; padding: 15px 40px;
+            font-family: inherit; font-weight: bold; width: 100%; margin-top: 20px;
+            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+        }
+        .btn-connect:hover { background: white; box-shadow: 0 0 30px white; }
+
+        footer { text-align: center; margin-top: 100px; padding: 40px; opacity: 0.2; font-size: 0.7rem; }
+
+        @media (max-width: 600px) {
+            .timer-val { font-size: 2.5rem; }
+            .glitch-logo { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div class="crt-filter"></div>
+
+    <div class="container">
+        <header>
+            <div class="glitch-logo">STATIC_SIGNAL_v1.0</div>
+            <div style="font-size: 0.7rem; color: var(--green);">[SYSTEM_ONLINE]</div>
+        </header>
+
+        <section class="hero">
+            <h1 style="letter-spacing: 15px; margin-bottom: 10px;">$STATIC</h1>
+            <p style="color: var(--blue); font-size: 1.1rem; margin-bottom: 40px;">// DECAY_PROTOCOL_84H_ACTIVE //</p>
+            
+            <div class="timer-frame">
+                <span style="font-size: 0.7rem; color: var(--red);">TIME_UNTIL_DECAY_LOCK:</span><br>
+                <div class="timer-val" id="countdown">84:00:00</div>
+            </div>
+            
+            <p style="max-width: 700px; margin: 40px auto; color: #777;">
+                > 84 hours of inactivity triggers a 25% signal decay tax. <br>
+                > Maintain the frequency. Keep the signal alive.
+            </p>
+        </section>
+
+        <div class="system-grid">
+            <div class="terminal-panel">
+                <span class="panel-label">> SIGNAL_DISTRIBUTION_MAP</span>
+                <div class="radar-ui">
+                    <svg viewBox="0 0 42 42" class="radar-svg">
+                        <circle class="ring p-pre" cx="21" cy="21" r="15.9"></circle>
+                        <circle class="ring p-liq" cx="21" cy="21" r="15.9"></circle>
+                        <circle class="ring p-mkt" cx="21" cy="21" r="15.9"></circle>
+                        <circle class="ring p-tm"  cx="21" cy="21" r="15.9"></circle>
+                        <circle class="ring p-air" cx="21" cy="21" r="15.9"></circle>
+                    </svg>
+                    <div style="position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align: center;">
+                        <span style="font-size: 1.5rem; font-weight: bold;">1.0B</span><br><span style="font-size: 0.5rem; color: #555;">SUPPLY</span>
+                    </div>
+                </div>
+                <ul style="list-style: none; font-size: 0.8rem; color: #bbb;">
+                    <li><span style="color: var(--red);">■</span> 40% Public Presale</li>
+                    <li><span style="color: var(--blue);">■</span> 30% Burned Liquidity</li>
+                    <li><span style="color: #fff;">■</span> 15% Marketing Wave</li>
+                    <li><span style="color: #444;">■</span> 10% Core Vested</li>
+                    <li><span style="color: #888;">■</span> 05% Community Drops</li>
+                </ul>
+            </div>
+
+            <div class="terminal-panel">
+                <span class="panel-label">> SYSTEM_ROADMAP_LOGS</span>
+                <div class="roadmap-list">
+                    <div class="protocol-item">
+                        <div class="status-tag">ACTIVE</div>
+                        <h4>PROTOCOL_01: GENESIS</h4>
+                        <ul>
+                            <li>- Contract Deployment [DONE]</li>
+                            <li>- 84H Tax Logic Setup [DONE]</li>
+                            <li>- Global Signal Ignition [PENDING]</li>
+                        </ul>
+                    </div>
+                    <div class="protocol-item">
+                        <div class="status-tag" style="color: #444; border-color: #222;">LOCKED</div>
+                        <h4>PROTOCOL_02: AMPLIFY</h4>
+                        <ul>
+                            <li>- Pinksale Transmission [LOCKED]</li>
+                            <li>- Liquidity Frequency Burn</li>
+                            <li>- DEXScreener Relay Data</li>
+                        </ul>
+                    </div>
+                    <div class="protocol-item">
+                        <div class="status-tag" style="color: #444; border-color: #222;">LOCKED</div>
+                        <h4>PROTOCOL_03: IMMUNITY</h4>
+                        <ul>
+                            <li>- CEX Signal Bridging</li>
+                            <li>- Global Noise Expansion</li>
+                            <li>- Final Silence Burn</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terminal-panel" style="border-color: var(--red);">
+                <span class="panel-label" style="color: var(--red);">> ACCESS_ENCRYPTION_KEY</span>
+                <p style="font-size: 0.8rem; color: #555;">Verify CA before transmission:</p>
+                <div class="ca-display">
+                    Euh9N7CEwhNAcHk6oYakunYqGH2cZaKUbmmFbg5yrt8M
+                </div>
+                
+                <p style="font-size: 0.8rem; margin-top: 25px; color: #555;">> SECURITY: TOKEN-2022<br>> NETWORK: SOLANA MAINNET</p>
+                
+                <button class="btn-connect">CONNECT_TO_PRESALE</button>
+            </div>
+        </div>
+
+        <footer>
+            NO RECOVERY KEY DETECTED. STATIC REMAINS FOREVER. <br>
+            TIMESTAMP: 2026.02.17_00:00:00_UTC
+        </footer>
+    </div>
+
+    <script>
+        // Professional Decay Timer
+        let totalSeconds = 84 * 3600;
+        const display = document.getElementById('countdown');
+
+        function updateTimer() {
+            if (totalSeconds > 0) {
+                totalSeconds--;
+                let h = Math.floor(totalSeconds / 3600);
+                let m = Math.floor((totalSeconds % 3600) / 60);
+                let s = totalSeconds % 60;
+                display.innerText = 
+                    String(h).padStart(2, '0') + ":" + 
+                    String(m).padStart(2, '0') + ":" + 
+                    String(s).padStart(2, '0');
+            }
+            
+            // Random glitch visual effect on timer
+            if (Math.random() > 0.99) {
+                display.style.opacity = "0.2";
+                setTimeout(() => display.style.opacity = "1", 50);
+            }
+        }
+        setInterval(updateTimer, 1000);
+
+        // Body vibration on mouse movement (Experimental)
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.97) {
+                document.body.style.transform = `translate(${Math.random() * 2}px, ${Math.random() * 2}px)`;
+            } else {
+                document.body.style.transform = `none`;
+            }
+        });
+    </script>
+</body>
+</html>
