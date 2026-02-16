@@ -10,6 +10,7 @@
             --bg-dark: #0a0a0a;
             --text-gray: #b0b0b0;
             --glitch-color: #00f2ff;
+            --card-bg: #0c0c0c;
         }
 
         body {
@@ -69,7 +70,7 @@
             background: linear-gradient(45deg, var(--primary-color), #8000ff);
             color: white;
             padding: 12px 30px;
-            border-radius: 0px; /* Sharp edges for a technical look */
+            border-radius: 0px; 
             text-decoration: none;
             font-weight: bold;
             transition: 0.3s;
@@ -97,7 +98,7 @@
             margin: 25px auto;
         }
 
-        /* Countdown Timer Box */
+        /* Timer Box */
         .timer-container {
             margin: 50px 0;
             background: #000;
@@ -125,40 +126,69 @@
             letter-spacing: 5px;
         }
 
+        /* Tokenomics Section */
+        .section-title {
+            text-align: center;
+            letter-spacing: 5px;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .token-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 40px 20px;
+            background: #050505;
+        }
+
+        .token-card {
+            background: var(--card-bg);
+            padding: 30px;
+            width: 200px;
+            text-align: center;
+            border: 1px solid #222;
+            transition: 0.3s;
+        }
+
+        .token-card:hover {
+            border-color: var(--glitch-color);
+            background: #111;
+        }
+
+        .token-card h2 {
+            color: var(--glitch-color);
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .token-card p {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
         .features {
             display: flex;
             justify-content: center;
             gap: 30px;
             flex-wrap: wrap;
             padding: 80px 20px;
-            background: #050505;
+            background: #000;
         }
 
         .card {
-            background: #0c0c0c;
+            background: var(--card-bg);
             padding: 40px;
             width: 320px;
-            border-radius: 0px;
             border-left: 4px solid var(--primary-color);
             transition: 0.3s;
         }
 
-        .card:hover {
-            background: #111;
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            color: white;
-            text-transform: uppercase;
-            margin-top: 0;
-            letter-spacing: 2px;
-        }
-
-        .card p {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
+        .card:hover { transform: translateY(-5px); }
 
         .contract-section {
             background: #000;
@@ -175,7 +205,6 @@
             word-break: break-all;
             max-width: 600px;
             margin: 20px auto;
-            font-size: 1rem;
         }
 
         footer {
@@ -184,6 +213,11 @@
             color: #444;
             font-size: 0.8rem;
             border-top: 1px solid #111;
+        }
+
+        @media (max-width: 768px) {
+            .timer { font-size: 2.5rem; }
+            .glitch { font-size: 2rem; }
         }
     </style>
 </head>
@@ -211,14 +245,38 @@
         </div>
     </section>
 
+    <h2 class="section-title">Token Distribution</h2>
+    <section class="token-grid">
+        <div class="token-card">
+            <h2>40%</h2>
+            <p>Public Presale</p>
+        </div>
+        <div class="token-card">
+            <h2>30%</h2>
+            <p>Liquidity (Locked)</p>
+        </div>
+        <div class="token-card">
+            <h2>15%</h2>
+            <p>Marketing</p>
+        </div>
+        <div class="token-card">
+            <h2>10%</h2>
+            <p>Development</p>
+        </div>
+        <div class="token-card">
+            <h2>5%</h2>
+            <p>Airdrops</p>
+        </div>
+    </section>
+
     <section class="features">
         <div class="card">
             <h3>84H DECAY</h3>
-            <p>If a wallet stops transmitting for more than 84 hours, the sell tax spikes to 25% automatically. Stay active. Keep the signal alive.</p>
+            <p>If a wallet stops transmitting for more than 84 hours, the sell tax spikes to 25% automatically. Stay active.</p>
         </div>
         <div class="card">
             <h3>TOKEN-2022</h3>
-            <p>Built using Solana's advanced Token-2022 standard. Hardcoded tax logic and irreversible transparency on the blockchain.</p>
+            <p>Built using Solana's advanced Token-2022 standard. Hardcoded tax logic and irreversible transparency.</p>
         </div>
         <div class="card">
             <h3>LOCKED POOL</h3>
@@ -237,7 +295,6 @@
     </footer>
 
     <script>
-        // Professional countdown script
         let totalSeconds = 84 * 3600; 
         function updateTimer() {
             if (totalSeconds > 0) {
