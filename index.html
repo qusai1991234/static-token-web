@@ -3,241 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$STATIC | The 84H Meme Experiment</title>
+    <title>STATIC | Galactic Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap');
+        
         :root {
-            --primary: #ff0055; 
-            --bg: #050505;
-            --glitch: #00f2ff;
+            --space-black: #020205;
+            --nebula-purple: #6b21a8;
+            --deep-cyan: #08f7fe;
+            --plasma-pink: #ff00c1;
         }
 
         body {
-            background-color: var(--bg);
+            background-color: var(--space-black);
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+
+        .stars-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .galactic-text {
+            background: linear-gradient(135deg, var(--deep-cyan) 0%, var(--plasma-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(8, 247, 254, 0.3);
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 25, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(8, 247, 254, 0.1);
+            box-shadow: inset 0 0 20px rgba(8, 247, 254, 0.05);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .glass-panel:hover {
+            border-color: var(--deep-cyan);
+            box-shadow: 0 0 30px rgba(8, 247, 254, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .btn-plasma {
+            background: linear-gradient(90deg, #08f7fe, #6b21a8);
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            line-height: 1.6;
-            background-image: linear-gradient(rgba(255, 0, 85, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 0, 85, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-
-        header {
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.8);
-            border-bottom: 2px solid var(--primary);
-            position: sticky; top: 0; z-index: 100;
-        }
-
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        .coin-logo { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--primary); filter: drop-shadow(0 0 5px var(--primary)); }
-
-        .hero-logo {
-            width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px;
-            border: 3px solid var(--primary); filter: drop-shadow(0 0 15px var(--primary));
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 15px var(--primary)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px var(--primary)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 15px var(--primary)); }
-        }
-
-        .btn-buy {
-            background: var(--primary); color: white; padding: 10px 25px;
-            font-weight: bold; text-decoration: none; border-radius: 5px;
-            box-shadow: 0 0 15px var(--primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 900;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 20px rgba(8, 247, 254, 0.4);
+            transition: 0.3s;
         }
 
-        .hero { text-align: center; padding: 60px 20px; }
-        .main-title { font-size: 4rem; font-weight: 900; text-transform: uppercase; text-shadow: 3px 3px var(--primary); margin: 0; }
-        
-        .timer-box {
-            background: black; padding: 20px 40px; border: 3px solid white;
-            display: inline-block; margin: 30px 0; transform: rotate(-2deg);
-        }
-        .timer { font-size: 3.5rem; font-weight: bold; color: var(--primary); }
-
-        .section-padding { padding: 60px 10%; }
-        
-        /* COMPARISON TABLE STYLE */
-        .comparison-container {
-            width: 100%; overflow-x: auto; margin-top: 40px;
-        }
-        table {
-            width: 100%; border-collapse: collapse; background: #0c0c0c;
-            border: 1px solid #333; border-radius: 15px; overflow: hidden;
-        }
-        th, td { padding: 20px; text-align: center; border: 1px solid #222; }
-        th { background: #111; color: var(--glitch); text-transform: uppercase; letter-spacing: 2px; }
-        .vs-cell { font-weight: bold; color: var(--primary); font-size: 1.2rem; }
-        .check-icon { color: #00ff00; font-size: 1.5rem; }
-        .cross-icon { color: #ff0000; font-size: 1.5rem; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .rule-card { background: #111; padding: 30px; border-radius: 15px; border: 1px solid #222; }
-        .rule-card h3 { color: var(--primary); margin-top: 0; }
-
-        .chart-container {
-            display: flex; align-items: center; justify-content: center; gap: 40px;
-            flex-wrap: wrap; background: #000; padding: 50px; border-radius: 20px;
-        }
-        .circle-chart {
-            width: 200px; height: 200px; border-radius: 50%;
-            background: conic-gradient(var(--primary) 0% 40%, var(--glitch) 40% 70%, white 70% 85%, #444 85% 95%, #222 95% 100%);
+        .btn-plasma:hover {
+            box-shadow: 0 0 40px rgba(8, 247, 254, 0.6);
+            transform: scale(1.05);
         }
 
-        .ca-box {
-            background: #111; padding: 20px; border-radius: 10px;
-            word-break: break-all; color: var(--glitch); font-family: monospace;
-            border: 1px solid #333; margin: 20px auto; max-width: 600px;
-            display: flex; align-items: center; justify-content: space-between; gap: 10px;
-        }
-        .copy-btn {
-            background: var(--primary); border: none; color: white;
-            padding: 8px 15px; cursor: pointer; border-radius: 5px; font-weight: bold;
+        .roadmap-line {
+            border-left: 2px solid var(--deep-cyan);
+            position: relative;
         }
 
-        footer { text-align: center; padding: 50px; opacity: 0.5; font-size: 0.8rem; }
-
-        @media (max-width: 768px) {
-            .main-title { font-size: 2.5rem; }
-            .timer { font-size: 2.5rem; }
+        /* تنسيق جدول المقارنة ليحاكي الصورة */
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
         }
+        .comparison-table th {
+            padding: 20px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        .comparison-table td {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .comparison-table tr td:first-child { border-left: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px 0 0 15px; font-weight: bold; color: var(--deep-cyan); }
+        .comparison-table tr td:last-child { border-right: 1px solid rgba(255, 255, 255, 0.05); border-radius: 0 15px 15px 0; }
     </style>
 </head>
-<body>
+<body class="overflow-x-hidden">
+    <div class="stars-overlay"></div>
 
-    <header>
-        <div class="logo-container">
-            <img src="https://i.postimg.cc/8k9t0FJZ/Gemini-Generated-Image-8fmwg48fmwg48fmw.png" alt="STATIC LOGO" class="coin-logo">
-            <span style="font-size: 1.5rem; font-weight: 900;">$STATIC</span>
-        </div>
-        <a href="#" class="btn-buy">Join Presale</a>
-    </header>
-
-    <section class="hero">
-        <img src="https://i.postimg.cc/8k9t0FJZ/Gemini-Generated-Image-8fmwg48fmwg48fmw.png" alt="STATIC MAIN" class="hero-logo">
-        <h1 class="main-title">84 HOURS OR DIE</h1>
-        <p style="font-size: 1.2rem; color: #888;">The first social experiment on Solana where silence is expensive.</p>
-
-        <div class="timer-box">
-            <div style="font-size: 0.8rem; color: white;">NEXT DECAY DROP IN:</div>
-            <div class="timer" id="countdown">83:59:16</div>
-        </div>
-    </section>
-
-    <section class="section-padding" style="border-top: 1px solid #222;">
-        <h2 style="text-align: center; font-size: 2.5rem; color: var(--primary);">WHY $STATIC?</h2>
-        <p style="text-align: center; color: #888; margin-bottom: 30px;">Stop being a victim of "Sleep & Dip" coins.</p>
-        
-        <div class="comparison-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>The Situation</th>
-                        <th>Standard Meme Coins</th>
-                        <th style="color: var(--primary);">$STATIC</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Buying Strategy</td>
-                        <td>Buy and Hope 🤞</td>
-                        <td>Stay Loud, Stay Alive 📢</td>
-                    </tr>
-                    <tr>
-                        <td>Holder Experience</td>
-                        <td>Buy, Sleep, Wake up to a 90% dip 📉</td>
-                        <td>Buy, Stay Active, Protocol protects you 🔥</td>
-                    </tr>
-                    <tr>
-                        <td>Paper Hands Tax</td>
-                        <td>0% (Everyone dumps on you) <span class="cross-icon">✘</span></td>
-                        <td>25% (We burn the weak signals) <span class="check-icon">✔</span></td>
-                    </tr>
-                    <tr>
-                        <td>Vibes</td>
-                        <td>Boring Utility <span class="cross-icon">✘</span></td>
-                        <td>Pure Adrenaline <span class="check-icon">✔</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <section class="section-padding" style="background: #080808;">
-        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px;">HOW IT WORKS</h2>
-        <div class="grid">
-            <div class="rule-card">
-                <h3>1. Buy $STATIC</h3>
-                <p>Join the frequency. Holders are safe as long as they stay connected.</p>
+    <nav class="fixed w-full z-[1000] py-6 px-10 flex justify-between items-center bg-black/50 backdrop-blur-md border-b border-white/5">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 border-2 border-cyan-400 rounded-full flex items-center justify-center animate-pulse">
+                <i class="fas fa-atom text-cyan-400"></i>
             </div>
-            <div class="rule-card">
-                <h3>2. Stay Active</h3>
-                <p>Don't go silent for more than 84 hours. One tiny move keeps your signal strong.</p>
-            </div>
-            <div class="rule-card">
-                <h3>3. The Penalty</h3>
-                <p>Inactive wallets trigger a 25% Decay Tax. We burn the silence to fuel the moon!</p>
+            <span class="font-orbitron font-black text-2xl tracking-widest galactic-text">$STATIC</span>
+        </div>
+        <div class="hidden md:flex space-x-10 text-xs font-bold tracking-[0.3em]">
+            <a href="#about" class="hover:text-cyan-400 transition">SYSTEM</a>
+            <a href="#comparison" class="hover:text-cyan-400 transition">VIBES</a>
+            <a href="#tokenomics" class="hover:text-cyan-400 transition">ECONOMY</a>
+            <a href="#roadmap" class="hover:text-cyan-400 transition">MISSION</a>
+        </div>
+        <a href="https://pinksale.finance" class="btn-plasma text-xs py-2 px-6">IGNITION</a>
+    </nav>
+
+    <section class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-40">
+                <source src= type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-[#020205]"></div>
+        </div>
+
+        <div class="relative z-10">
+            <h2 class="font-orbitron text-sm md:text-lg mb-4 tracking-[0.5em] text-cyan-400 uppercase" data-aos="fade-down">🚨 DON'T JUST STAND THERE, DO SOMETHING</h2>
+            <h1 class="text-6xl md:text-9xl font-orbitron font-black mb-8 leading-tight" data-aos="zoom-in">
+                MOVE IT<br><span class="galactic-text">OR LOSE IT.</span>
+            </h1>
+            <p class="text-gray-400 font-medium text-lg md:text-xl mb-10 max-w-3xl mx-auto uppercase tracking-widest" data-aos="fade-up">
+                The first hyper-deflationary token on Solana with a 84-hour decay mechanism. Stay active or witness the burn. 🔥
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-6 mt-10" data-aos="fade-up" data-aos-delay="300">
+                <a href="https://pinksale.finance" class="btn-plasma">LIFT OFF ON PINKSALE</a>
+                <a href="#about" class="px-10 py-4 font-bold border border-cyan-400/30 rounded-full hover:bg-cyan-400/10 transition flex items-center justify-center backdrop-blur-sm">
+                    <i class="fas fa-satellite mr-3 text-cyan-400"></i> VIEW MISSION DATA
+                </a>
             </div>
         </div>
     </section>
 
-    <section class="section-padding">
-        <h2 style="text-align: center; font-size: 2.5rem; color: var(--primary);">TOKENOMICS</h2>
-        <div class="chart-container">
-            <div class="circle-chart"></div>
-            <ul style="list-style: none; padding: 0;">
-                <li><span style="color: var(--primary);">■</span> 40% Public Presale</li>
-                <li><span style="color: var(--glitch);">■</span> 30% Burned Liquidity</li>
-                <li><span style="color: white;">■</span> 15% Marketing</li>
-                <li><span style="color: #444;">■</span> 10% Core Team</li>
-                <li><span style="color: #222;">■</span> 05% Airdrops</li>
-            </ul>
+    <section id="comparison" class="py-32 relative z-10 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-orbitron text-5xl font-black mb-4 uppercase">WHY <span class="text-[#ff00c1]">$STATIC?</span></h2>
+                <p class="text-gray-400 tracking-widest uppercase text-sm">Stop being a victim of "Sleep & Dip" coins.</p>
+            </div>
+            
+            <div class="overflow-x-auto" data-aos="fade-up">
+                <table class="comparison-table text-center">
+                    <thead>
+                        <tr>
+                            <th class="text-left text-xs text-gray-500">The Situation</th>
+                            <th class="text-cyan-400">Standard Meme Coins</th>
+                            <th class="text-[#ff00c1]">$STATIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left text-sm uppercase">Buying Strategy</td>
+                            <td class="text-gray-400">Buy and Hope 🤞</td>
+                            <td class="font-bold">Stay Loud, Stay Alive 📢</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-sm uppercase">Holder Experience</td>
+                            <td class="text-gray-400">Buy, Sleep, Wake up to a 90% dip 📉</td>
+                            <td class="font-bold">Buy, Stay Active, Protocol protects you 🔥</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-sm uppercase">Paper Hands Tax</td>
+                            <td class="text-gray-400 text-sm">0% (Everyone dumps on you) ❌</td>
+                            <td class="font-bold text-green-400">25% (We burn the weak signals) ✅</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-sm uppercase">Vibes</td>
+                            <td class="text-gray-400">Boring Utility ❌</td>
+                            <td class="font-bold text-green-400">Pure Adrenaline ✅</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
-    <section class="section-padding" style="text-align: center; border-top: 1px solid #222;">
-        <h2>CONTRACT ADDRESS</h2>
-        <div class="ca-box">
-            <span id="ca-text">Euh9N7CEwhNAcHk6oYakunYqGH2cZaKUbmmFbg5yrt8M</span>
-            <button class="copy-btn" onclick="copyCA()">COPY</button>
+    <section id="about" class="py-32 relative z-10 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-24">
+                <h2 class="font-orbitron text-4xl font-bold mb-4">THE 84-HOUR VORTEX</h2>
+                <div class="h-1 w-32 bg-cyan-400 mx-auto rounded-full shadow-[0_0_10px_#08f7fe]"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="glass-panel p-10 relative overflow-hidden group" data-aos="fade-right">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-30 transition">
+                        <i class="fas fa-meteor text-8xl"></i>
+                    </div>
+                    <h3 class="font-orbitron text-2xl mb-6 text-cyan-400">STATIC ORBIT</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed">Transactions within the 84-hour window incur a standard 5% tax. Every single drop is instantly burned from the total supply.</p>
+                </div>
+                
+                <div class="glass-panel p-10 border-red-500/20 relative overflow-hidden group" data-aos="fade-left">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-30 transition text-red-500">
+                        <i class="fas fa-sun text-8xl"></i>
+                    </div>
+                    <h3 class="font-orbitron text-2xl mb-6 text-red-500"> ACTIVE MODE</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed">Holding for more than 84 hours without activity? Your next transaction tax jumps to 25%. We reward the fast and punish the stagnant.</p>
+                </div>
+            </div>
         </div>
-        <p id="copy-status" style="color: var(--glitch); font-size: 0.8rem; height: 20px;"></p>
     </section>
 
-    <footer>
-        $STATIC IS A MEME COIN. NO UTILITY, JUST VIBES. &copy; 2026
+    <section id="tokenomics" class="py-32 bg-black/40 relative z-10">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="font-orbitron text-center text-4xl mb-20 tracking-tighter uppercase">Allocation Protocol</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                <div class="glass-panel p-8" data-aos="flip-up" data-aos-delay="100">
+                    <h5 class="font-orbitron text-3xl font-bold galactic-text">40%</h5>
+                    <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-widest">Public Sale</p>
+                </div>
+                <div class="glass-panel p-8" data-aos="flip-up" data-aos-delay="200">
+                    <h5 class="font-orbitron text-3xl font-bold galactic-text">30%</h5>
+                    <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-widest">Burned Liq</p>
+                </div>
+                <div class="glass-panel p-8" data-aos="flip-up" data-aos-delay="300">
+                    <h5 class="font-orbitron text-3xl font-bold galactic-text">15%</h5>
+                    <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-widest">Marketing</p>
+                </div>
+                <div class="glass-panel p-8" data-aos="flip-up" data-aos-delay="400">
+                    <h5 class="font-orbitron text-3xl font-bold galactic-text">10%</h5>
+                    <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-widest">Core Team</p>
+                </div>
+                <div class="glass-panel p-8" data-aos="flip-up" data-aos-delay="500">
+                    <h5 class="font-orbitron text-3xl font-bold galactic-text">5%</h5>
+                    <p class="text-[10px] text-gray-500 mt-2 uppercase tracking-widest">Airdrops</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 glass-panel p-6 flex flex-col md:flex-row justify-between items-center max-w-3xl mx-auto" data-aos="zoom-in">
+                <span class="text-xs font-bold text-gray-500 mb-4 md:mb-0 uppercase tracking-widest italic">Encrypted Contract Address</span>
+                <span class="font-mono text-cyan-400 text-sm md:text-lg">2wBaqjVUhKef9VQZkjqrivj9oPq6mAerav2jwhzgbnP9</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap" class="py-32 px-10 max-w-4xl mx-auto relative z-10">
+        <h2 class="font-orbitron text-4xl font-bold mb-20 text-center">MISSION LOG</h2>
+        <div class="roadmap-line space-y-16 pl-10">
+            <div class="relative" data-aos="fade-up">
+                <div class="absolute -left-[51px] top-0 bg-cyan-400 w-10 h-10 rounded-full shadow-[0_0_15px_#08f7fe] flex items-center justify-center">
+                    <i class="fas fa-rocket text-black text-xs"></i>
+                </div>
+                <h4 class="font-orbitron text-2xl font-bold text-cyan-400">PHASE 1: LIFT OFF</h4>
+                <p class="text-gray-400 mt-2 text-lg italic">Launch on Pinksale, Smart Contract Validation, Community Onboarding.</p>
+            </div>
+            <div class="relative" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute -left-[51px] top-0 bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center">
+                    <i class="fas fa-satellite-dish text-white text-xs"></i>
+                </div>
+                <h4 class="font-orbitron text-2xl font-bold text-white">PHASE 2: ORBIT</h4>
+                <p class="text-gray-400 mt-2 text-lg italic">Raydium Listing, Influencer Marketing, Price Discovery Phase.</p>
+            </div>
+            <div class="relative" data-aos="fade-up" data-aos-delay="400">
+                <div class="absolute -left-[51px] top-0 bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center">
+                    <i class="fas fa-portal-exit text-white text-xs"></i>
+                </div>
+                <h4 class="font-orbitron text-2xl font-bold text-white">PHASE 3: HYPERSPACE</h4>
+                <p class="text-gray-400 mt-2 text-lg italic">CEX Tier 1 Listings, Massive Burn Events, Global Dominance.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 px-6 text-center border-t border-cyan-400/10 relative z-10">
+        <div class="flex justify-center space-x-10 mb-8">
+            <a href="#" class="text-3xl text-gray-500 hover:text-cyan-400 transition transform hover:scale-125"><i class="fab fa-telegram-plane"></i></a>
+            <a href="#" class="text-3xl text-gray-500 hover:text-cyan-400 transition transform hover:scale-125"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p class="font-orbitron text-[10px] text-gray-600 tracking-[0.5em] uppercase">
+            Static Protocol © 2026 | No Financial Advice Just Hyper-Burn.
+        </p>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Countdown logic
-        let totalSeconds = 83 * 3600 + 59 * 60 + 16;
-        function updateTimer() {
-            if (totalSeconds > 0) {
-                totalSeconds--;
-                let h = Math.floor(totalSeconds / 3600);
-                let m = Math.floor((totalSeconds % 3600) / 60);
-                let s = totalSeconds % 60;
-                document.getElementById('countdown').innerText = 
-                    String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
-            }
-        }
-        setInterval(updateTimer, 1000);
-
-        // Copy logic
-        function copyCA() {
-            const ca = document.getElementById('ca-text').innerText;
-            navigator.clipboard.writeText(ca);
-            const status = document.getElementById('copy-status');
-            status.innerText = "COPIED TO CLIPBOARD! 🚀";
-            setTimeout(() => { status.innerText = ""; }, 2000);
-        }
+        AOS.init({ duration: 1200, once: true });
     </script>
 </body>
 </html>
